@@ -1,6 +1,16 @@
 import React from "react";
+import ArchiveButton from "./ArchiveButton";
+import DeleteButton from "./DeleteButton";
 
-const NoteItem = ({ id, title, body, createdAt, archived }) => {
+const NoteItem = ({
+  id,
+  title,
+  body,
+  createdAt,
+  archived,
+  onDelete,
+  onArchive,
+}) => {
   return (
     <div className="note-item">
       <div className="note-item__content">
@@ -11,8 +21,8 @@ const NoteItem = ({ id, title, body, createdAt, archived }) => {
         </div>
       </div>
       <div className="note-item__action">
-        <button className="note-item__delete-button" id={id}>Delete</button>
-        <button className="note-item__archive-button" id={id}>Archive</button>
+        <DeleteButton id={id} onDelete={onDelete} />
+        <ArchiveButton id={id} onArchive={onArchive} />
       </div>
     </div>
   );
