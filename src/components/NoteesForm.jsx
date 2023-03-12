@@ -6,11 +6,12 @@ const NoteesForm = ({ addNote }) => {
     body: "",
   });
 
-  const [limit, setLimit] = useState(0);
+  const [limit, setLimit] = useState(50);
 
   const onChangeHandler = (e) => {
     if (e.target.name === "title") {
-      setLimit(e.target.value.length);
+      let max = 50;
+      setLimit(max - e.target.value.length);
     }
 
     if (e.target.name === "title" && e.target.value.length >= 50) {
