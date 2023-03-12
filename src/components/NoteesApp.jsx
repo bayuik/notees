@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import NoteesForm from "./NoteesForm";
 import NotesList from "./NotesList";
-import { getInitialData, showFormattedDate } from "../utils";
+import { getInitialData } from "../utils";
 import { useState } from "react";
 
 const NoteesApp = () => {
@@ -13,7 +13,7 @@ const NoteesApp = () => {
       ...notes,
       {
         id: +new Date(),
-        createdAt: showFormattedDate(+new Date()),
+        createdAt: +new Date(),
         archived: false,
         ...note,
       },
@@ -39,11 +39,17 @@ const NoteesApp = () => {
     <>
       <Header />
       <NoteesForm addNote={handlerAddNote} />
-      <NotesList
-        notes={notes}
-        onDelete={handlerDeleteNote}
-        onArchive={handlerArchiveNote}
-      />
+      {
+        notes.length > 0 ? (
+          <NotesList
+          notes={notes}
+          onDelete={handlerDeleteNote}
+          onArchive={handlerArchiveNote}
+        />
+        ) : (
+          <p className="notes-list__empty-message">No notes yet</p>
+        )
+      }
     </>
   );
 };

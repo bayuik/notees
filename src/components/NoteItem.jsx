@@ -1,6 +1,7 @@
 import React from "react";
 import ArchiveButton from "./ArchiveButton";
 import DeleteButton from "./DeleteButton";
+import { showFormattedDate } from "../utils";
 
 const NoteItem = ({
   id,
@@ -15,7 +16,7 @@ const NoteItem = ({
     <div className="note-item">
       <div className="note-item__content">
         <h4 className="note-item__title">{title}</h4>
-        <p className="note-item__date">{createdAt}</p>
+        <p className="note-item__date">{showFormattedDate(createdAt)}</p>
         <div className="note-item__body">
           <p>{body}</p>
         </div>
