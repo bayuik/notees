@@ -7,6 +7,30 @@ import { useState } from "react";
 
 const NoteesApp = () => {
   const [notes, setNotes] = useState(getInitialData());
+  const [searchByTitle, setSearchByTitle] = useState({
+    filteredNotes: [],
+    tempNotes: [],
+  });
+
+  const handlerSearchNote = (e) => {
+    let searchNotes = e.target.value;
+    if (searchNotes.length != 0) {
+      const noteList = notes;
+      const filteredNotes = noteList.filter((note) => {
+        return note.title.toLowerCase().includes(searchNotes.toLowerCase());
+      });
+
+      if (searchByTitle.tempNotes.length == 0) {
+        setSearchByTitle({ filteredNotes, tempNotes: notes });
+      } else {
+        setSearchByTitle({ ...searchByTitle, filteredNotes });
+      }
+      setNotes(filteredNotes);
+    } else {
+      setNotes(searchByTitle.tempNotes);
+      setSearchByTitle({ filteredNotes: [], tempNotes: [] });
+    }
+  };
 
   const handlerAddNote = (note) => {
     setNotes([
@@ -37,19 +61,17 @@ const NoteesApp = () => {
 
   return (
     <>
-      <Header />
+      <Header onSearchNote={handlerSearchNote} />
       <NoteesForm addNote={handlerAddNote} />
-      {
-        notes.length > 0 ? (
-          <NotesList
+      {notes.length ? (
+        <NotesList
           notes={notes}
           onDelete={handlerDeleteNote}
           onArchive={handlerArchiveNote}
         />
-        ) : (
-          <p className="notes-list__empty-message">No notes yet</p>
-        )
-      }
+      ) : (
+        <p className="notes-list__empty-message">No notes yet</p>
+      )}
     </>
   );
 };
